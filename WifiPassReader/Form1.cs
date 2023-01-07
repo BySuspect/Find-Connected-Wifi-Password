@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,7 +32,14 @@ namespace WifiPassReader
                 process.StartInfo = startInfo;
                 process.Start();
                 string output = process.StandardOutput.ReadToEnd();
-                MessageBox.Show(output, "On Key Content");
+
+                string pattern = @"Key Content\s*:\s*(\S+)";
+                Match match = Regex.Match(output, pattern);
+                if (match.Success)
+                {
+                    string keyContent = match.Groups[1].Value;
+                    MessageBox.Show(keyContent, "Password");
+                }
                 process.WaitForExit();
             }
             catch (Exception ex)
