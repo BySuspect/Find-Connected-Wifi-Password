@@ -1,6 +1,14 @@
 # WifiPassReader
 
-## Enter Your Wifi SSID
-![image](https://user-images.githubusercontent.com/70052500/211145870-3870ad31-1d80-4e21-88f6-627cddb0cd03.png)
-## Pass on Key Content
-![image](https://user-images.githubusercontent.com/70052500/211145831-4f166ec8-67db-4b00-a6df-0282f4552eaf.png)
+### [Download here](https://github.com/BySuspect/Find-Connected-Wifi-Password/releases/latest)
+
+## Preview
+
+![Preview](https://media.discordapp.net/attachments/1086515379418964061/1126060255789465660/wifipassreaderpreview.png)
+
+If you get an error upon launching, install [.NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48).
+
+## Usage
+
+-  Select saved wifi name on `Combobox` and click `Get`
+-  If there is a wifi password, you can copy it from the `Textbox` below.

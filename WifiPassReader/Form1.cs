@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WifiPassReader
@@ -28,7 +22,7 @@ namespace WifiPassReader
                 startInfo.UseShellExecute = false;
                 startInfo.RedirectStandardOutput = true;
                 startInfo.FileName = "CMD.exe";
-                startInfo.Arguments = "/c netsh wlan show profiles \"" + txtssid.Text + "\" key=clear";//cmd command like this "/c ipconfig"
+                startInfo.Arguments = "/c netsh wlan show profiles \"" + cbmain.Text + "\" key=clear";//cmd command like this "/c ipconfig"
                 process.StartInfo = startInfo;
                 process.Start();
                 string output = process.StandardOutput.ReadToEnd();
@@ -38,14 +32,50 @@ namespace WifiPassReader
                 if (match.Success)
                 {
                     string keyContent = match.Groups[1].Value;
-                    MessageBox.Show(keyContent, "Password");
+                    txtpass.Text = keyContent;
                 }
+                else
+                    txtpass.Text = "No wifi password";
                 process.WaitForExit();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error");
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            cbmain.Items.Clear();
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.FileName = "CMD.exe";
+            startInfo.Arguments = "/c netsh wlan show profiles";//cmd command like this "/c ipconfig"
+            process.StartInfo = startInfo;
+            process.Start();
+            string output = process.StandardOutput.ReadToEnd();
+
+            List<string> wifiNames = GetUserProfiles(output);
+            cbmain.Items.AddRange(wifiNames.ToArray());
+
+            process.WaitForExit();
+        }
+        public List<string> GetUserProfiles(string text)
+        {
+            List<string> profiles = new List<string>();
+
+            string pattern = @"All User Profile\s+:\s+(.+)";
+            MatchCollection matches = Regex.Matches(text, pattern);
+
+            foreach (Match match in matches)
+            {
+                string profileName = match.Groups[1].Value.Trim();
+                profiles.Add(profileName);
+            }
+
+            return profiles;
         }
     }
 }
