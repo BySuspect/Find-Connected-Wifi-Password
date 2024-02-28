@@ -4,7 +4,7 @@
 
 ## Preview
 
-![Preview](https://media.discordapp.net/attachments/1086515379418964061/1126060255789465660/wifipassreaderpreview.png)
+![Preview](https://imgur.com/VsJ4y55.png)
 
 If you get an error upon launching, install [.NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48).
 
